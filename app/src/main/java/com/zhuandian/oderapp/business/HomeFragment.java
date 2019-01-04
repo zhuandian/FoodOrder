@@ -3,6 +3,7 @@ package com.zhuandian.oderapp.business;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,12 +18,14 @@ import com.zhuandian.oderapp.adpter.FoodListAdapter;
 import com.zhuandian.oderapp.base.BaseFragment;
 import com.zhuandian.oderapp.entity.CategoryEntity;
 import com.zhuandian.oderapp.entity.FoodEntity;
+import com.zhuandian.oderapp.entity.OrderEntity;
 import com.zhuandian.oderapp.event.AlertOrderEvent;
 import com.zhuandian.oderapp.event.BindEventBus;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -227,20 +230,20 @@ public class HomeFragment extends BaseFragment {
 
     @OnClick(R.id.tv_to_order_page)
     public void onClick() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("下单成功")
-                .setMessage("下单成功，祝您用餐愉快!!")
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        shopCarList.clear();
-                        initShopCarData();
-                        foodEntityList.clear();
-                        foodListAdapter.notifyDataSetChanged();
-                        initFoodList();
-                        dialog.dismiss();
-                    }
-                })
-                .show();
+        Intent intent = new Intent(getActivity(), OrderActivity.class);
+        intent.putExtra("data", (Serializable) shopCarList);
+        startActivityForResult(intent, OrderActivity.REQUEST_OPEN_ORDER_PAGE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == OrderActivity.REQUEST_OPEN_ORDER_PAGE && resultCode == OrderActivity.REQUEST_CLOSE_ORDER_PAGE) {
+            shopCarList.clear();
+            initShopCarData();
+            foodEntityList.clear();
+            foodListAdapter.notifyDataSetChanged();
+            initFoodList();
+        }
     }
 }

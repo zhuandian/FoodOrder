@@ -39,7 +39,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
             android:gravity="center"
-            android:text="注册新用户？"
+            android:text="注册？"
             android:textColor="#fff"
             android:textSize="15sp" />
 
