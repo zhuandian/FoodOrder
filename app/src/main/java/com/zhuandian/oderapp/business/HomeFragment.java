@@ -93,7 +93,7 @@ public class HomeFragment extends BaseFragment {
                                     }
                                     return -1;
                                     //升序排列
-//                                    return o1.getFoodType() + "".compareTo(o2.getFoodType() + "");
+//                                    return o1.getFoodId() + "".compareTo(o2.getFoodId() + "");
                                 }
                             });
                             foodEntityList.addAll(list);

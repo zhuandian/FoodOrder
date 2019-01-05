@@ -1,7 +1,6 @@
 package com.zhuandian.oderapp.business;
 
 import android.content.DialogInterface;
-import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class OrderActivity extends BaseActivity {
@@ -44,24 +42,34 @@ public class OrderActivity extends BaseActivity {
         orderEntityList = new ArrayList<>();
         shopCarList = (List<FoodEntity>) getIntent().getSerializableExtra("data");
         for (int i = 0; i < shopCarList.size(); i++) {
-            OrderEntity orderEntity = new OrderEntity();
-            orderEntity.setFoodType(shopCarList.get(i).getFoodType());
-            orderEntity.setFoodUrl(shopCarList.get(i).getFoodImgUrl());
-            orderEntity.setOrderName(shopCarList.get(i).getFoodName());
-            orderEntity.setOrderPrice(shopCarList.get(i).getFoodPrice());
+
+            boolean isAdd = false;
             if (orderEntityList.size() == 0) {
+                OrderEntity orderEntity = new OrderEntity();
+                orderEntity.setFoodId(shopCarList.get(i).getFoodId());
+                orderEntity.setFoodUrl(shopCarList.get(i).getFoodImgUrl());
+                orderEntity.setOrderName(shopCarList.get(i).getFoodName());
+                orderEntity.setOrderPrice(shopCarList.get(i).getFoodPrice());
                 orderEntity.setOrderCount(1);
                 orderEntityList.add(orderEntity);
             } else {
                 for (int j = 0; j < orderEntityList.size(); j++) {
-                    if (shopCarList.get(i).getFoodType() == orderEntityList.get(j).getFoodType()) {
+                    if (shopCarList.get(i).getFoodId() == orderEntityList.get(j).getFoodId()) {
                         int currentCount = orderEntityList.get(j).getOrderCount() + 1;
                         orderEntityList.get(j).setOrderCount(currentCount);
-                    } else {
-                        orderEntity.setOrderCount(1);
-                        orderEntityList.add(orderEntity);
+                        isAdd = true;
                     }
                 }
+                if (!isAdd) {
+                    OrderEntity orderEntity = new OrderEntity();
+                    orderEntity.setFoodId(shopCarList.get(i).getFoodId());
+                    orderEntity.setFoodUrl(shopCarList.get(i).getFoodImgUrl());
+                    orderEntity.setOrderName(shopCarList.get(i).getFoodName());
+                    orderEntity.setOrderPrice(shopCarList.get(i).getFoodPrice());
+                    orderEntity.setOrderCount(1);
+                    orderEntityList.add(orderEntity);
+                }
+
 
             }
         }
