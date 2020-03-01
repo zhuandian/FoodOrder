@@ -17,4 +17,18 @@
         android:layout_width="match_parent"
         android:layout_height="500dp"
         android:src="@drawable/ic_shop" />
+
+    <TextView
+        android:id="@+id/tv_logout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:background="#F44336"
+        android:gravity="center"
+        android:text="注销登录"
+        android:textColor="#fff"
+        android:textSize="18sp" />
 </RelativeLayout>

@@ -76,7 +76,7 @@ public class HomeFragment extends BaseFragment {
 
     private void initFoodList() {
         BmobQuery<FoodEntity> query = new BmobQuery<>();
-        query.order("-createdA")
+        query.order("-updatedAt")
                 .findObjects(new FindListener<FoodEntity>() {
                     @Override
                     public void done(List<FoodEntity> list, BmobException e) {

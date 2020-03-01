@@ -6,5 +6,5 @@ package com.zhuandian.oderapp.Utils;
  * data：2018/12/28
  */
 public class Constant {
-    public static final String APP_ID="91d880e8d2632fc72f3a3542a817cdec";
+    public static final String APP_ID="67be1cdcf5559af1366b88f688f56473";
 }
