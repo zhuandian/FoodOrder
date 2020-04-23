@@ -46,7 +46,7 @@ public class OrderActivity extends BaseActivity {
             boolean isAdd = false;
             if (orderEntityList.size() == 0) {
                 OrderEntity orderEntity = new OrderEntity();
-                orderEntity.setFoodId(shopCarList.get(i).getFoodId());
+                orderEntity.setFoodId(shopCarList.get(i).getObjectId());
                 orderEntity.setFoodUrl(shopCarList.get(i).getFoodImgUrl());
                 orderEntity.setOrderName(shopCarList.get(i).getFoodName());
                 orderEntity.setOrderPrice(shopCarList.get(i).getFoodPrice());
@@ -54,7 +54,7 @@ public class OrderActivity extends BaseActivity {
                 orderEntityList.add(orderEntity);
             } else {
                 for (int j = 0; j < orderEntityList.size(); j++) {
-                    if (shopCarList.get(i).getFoodId() == orderEntityList.get(j).getFoodId()) {
+                    if (shopCarList.get(i).getObjectId().equals(orderEntityList.get(j).getFoodId())) {
                         int currentCount = orderEntityList.get(j).getOrderCount() + 1;
                         orderEntityList.get(j).setOrderCount(currentCount);
                         isAdd = true;
@@ -62,7 +62,7 @@ public class OrderActivity extends BaseActivity {
                 }
                 if (!isAdd) {
                     OrderEntity orderEntity = new OrderEntity();
-                    orderEntity.setFoodId(shopCarList.get(i).getFoodId());
+                    orderEntity.setFoodId(shopCarList.get(i).getObjectId());
                     orderEntity.setFoodUrl(shopCarList.get(i).getFoodImgUrl());
                     orderEntity.setOrderName(shopCarList.get(i).getFoodName());
                     orderEntity.setOrderPrice(shopCarList.get(i).getFoodPrice());

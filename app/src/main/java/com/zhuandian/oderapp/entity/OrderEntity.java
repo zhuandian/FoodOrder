@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class OrderEntity implements Serializable {
     private String orderName;
-    private int foodId;
+    private String foodId;
     private int orderCount;
     private double orderPrice;
     private String foodUrl;
@@ -30,11 +30,11 @@ public class OrderEntity implements Serializable {
         this.orderName = orderName;
     }
 
-    public int getFoodId() {
+    public String getFoodId() {
         return foodId;
     }
 
-    public void setFoodId(int foodId) {
+    public void setFoodId(String foodId) {
         this.foodId = foodId;
     }
 

@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.zhuandian.oderapp.MainActivity;
 import com.zhuandian.oderapp.R;
 import com.zhuandian.oderapp.base.BaseActivity;
+import com.zhuandian.oderapp.business.AdminActivity;
 import com.zhuandian.oderapp.entity.UserEntity;
 
 import butterknife.BindView;
@@ -63,11 +64,16 @@ public class LoginActivity extends BaseActivity {
             UserEntity userEntity = new UserEntity();
             userEntity.setUsername(userName);
             userEntity.setPassword(passWord);
-            userEntity.login(new SaveListener<Object>() {
+            userEntity.login(new SaveListener<UserEntity>() {
                 @Override
-                public void done(Object o, BmobException e) {
+                public void done(UserEntity userEntity, BmobException e) {
                     if (e == null) {
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
+                        if (userEntity.getType()==1){
+                            startActivity(new Intent(LoginActivity.this, AdminActivity.class));
+                        }else {
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        }
                         finish();
                     } else {
                         Toast.makeText(LoginActivity.this, "登陆失败...", Toast.LENGTH_SHORT).show();

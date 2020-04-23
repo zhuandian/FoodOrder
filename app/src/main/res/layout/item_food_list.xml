@@ -9,7 +9,7 @@
         android:layout_height="80dp"
         android:layout_centerVertical="true"
         android:scaleType="fitXY"
-        android:src="@drawable/bmob_update_btn_check_off_holo_light" />
+        android:src="@drawable/ic_add_food" />
 
     <TextView
         android:id="@+id/tv_food_name"
