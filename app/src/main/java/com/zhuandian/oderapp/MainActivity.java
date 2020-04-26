@@ -1,11 +1,14 @@
 package com.zhuandian.oderapp;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.zhuandian.oderapp.adpter.HomeViewPageAdapter;
 import com.zhuandian.oderapp.base.BaseActivity;
 import com.zhuandian.oderapp.base.BaseFragment;
+import com.zhuandian.oderapp.business.ChoseShopActivity;
 import com.zhuandian.oderapp.business.HomeFragment;
 import com.zhuandian.oderapp.business.ShopStoreFragment;
 
@@ -37,6 +40,15 @@ public class MainActivity extends BaseActivity {
         fragments.add(new ShopStoreFragment());
         vpPage.setAdapter(new HomeViewPageAdapter(getSupportFragmentManager(), fragments));
         tabLayout.setupWithViewPager(vpPage);
+
+        findViewById(R.id.et_search).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ChoseShopActivity.class));
+                finish();
+            }
+        });
+
     }
 
 

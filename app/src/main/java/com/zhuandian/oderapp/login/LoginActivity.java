@@ -13,6 +13,7 @@ import com.zhuandian.oderapp.MainActivity;
 import com.zhuandian.oderapp.R;
 import com.zhuandian.oderapp.base.BaseActivity;
 import com.zhuandian.oderapp.business.AdminActivity;
+import com.zhuandian.oderapp.business.ChoseShopActivity;
 import com.zhuandian.oderapp.entity.UserEntity;
 
 import butterknife.BindView;
@@ -72,7 +73,7 @@ public class LoginActivity extends BaseActivity {
                         if (userEntity.getType()==1){
                             startActivity(new Intent(LoginActivity.this, AdminActivity.class));
                         }else {
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            startActivity(new Intent(LoginActivity.this, ChoseShopActivity.class));
                         }
                         finish();
                     } else {

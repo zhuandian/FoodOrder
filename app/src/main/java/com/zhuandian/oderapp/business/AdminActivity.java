@@ -50,6 +50,8 @@ public class AdminActivity extends BaseActivity {
     TextView tvType;
     @BindView(R.id.tv_commit)
     TextView tvCommit;
+    @BindView(R.id.et_shop_name)
+    EditText etShopName;
     private String imgUrl;
     private String typeName;
     private int type;
@@ -85,8 +87,9 @@ public class AdminActivity extends BaseActivity {
         String name = etName.getText().toString();
         String desc = etDesc.getText().toString();
         String price = etPrice.getText().toString();
+        String shopName = etShopName.getText().toString();
 
-        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(desc) || TextUtils.isEmpty(price)) {
+        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(desc) || TextUtils.isEmpty(price)|| TextUtils.isEmpty(shopName)) {
             Toast.makeText(this, "请完善信息", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -98,6 +101,7 @@ public class AdminActivity extends BaseActivity {
         foodEntity.setFoodName(name);
         foodEntity.setFoodPrice(Integer.parseInt(price));
         foodEntity.setFoodType(type);
+        foodEntity.setShopName(shopName);
 
         foodEntity.save(new SaveListener<String>() {
             @Override

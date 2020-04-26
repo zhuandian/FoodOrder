@@ -17,7 +17,15 @@ public class FoodEntity extends BmobObject implements Serializable {
     private double foodPrice;
     private String typeName;
     private int foodCount; //本地缓存使用，不做网络数据存储
+    private String shopName;  //店铺名
 
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
 
     public int getFoodCount() {
         return foodCount;

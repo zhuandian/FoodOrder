@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zhuandian.oderapp.MainActivity;
 import com.zhuandian.oderapp.R;
 import com.zhuandian.oderapp.adpter.CategoryListAdapter;
 import com.zhuandian.oderapp.adpter.FoodListAdapter;
@@ -61,6 +62,7 @@ public class HomeFragment extends BaseFragment {
     private CategoryListAdapter categoryListAdapter;
     private int userScrollState;
     private FoodListAdapter foodListAdapter;
+    private String shopName;
 
 
     @Override
@@ -70,6 +72,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        shopName = getActivity().getIntent().getStringExtra("shopName");
         initFoodList();
         initCategoryList();
     }
@@ -77,6 +80,7 @@ public class HomeFragment extends BaseFragment {
     private void initFoodList() {
         BmobQuery<FoodEntity> query = new BmobQuery<>();
         query.order("-updatedAt")
+                .addWhereEqualTo("shopName",shopName)
                 .findObjects(new FindListener<FoodEntity>() {
                     @Override
                     public void done(List<FoodEntity> list, BmobException e) {
@@ -228,11 +232,18 @@ public class HomeFragment extends BaseFragment {
     }
 
 
-    @OnClick(R.id.tv_to_order_page)
-    public void onClick() {
-        Intent intent = new Intent(getActivity(), OrderActivity.class);
-        intent.putExtra("data", (Serializable) shopCarList);
-        startActivityForResult(intent, OrderActivity.REQUEST_OPEN_ORDER_PAGE);
+    @OnClick({R.id.tv_to_order_page})
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.tv_to_order_page:
+                Intent intent = new Intent(getActivity(), OrderActivity.class);
+                intent.putExtra("data", (Serializable) shopCarList);
+                startActivityForResult(intent, OrderActivity.REQUEST_OPEN_ORDER_PAGE);
+                break;
+
+
+        }
+
     }
 
     @Override
