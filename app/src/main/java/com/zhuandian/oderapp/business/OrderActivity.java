@@ -7,8 +7,10 @@ import android.widget.TextView;
 
 import com.zhuandian.oderapp.R;
 import com.zhuandian.oderapp.base.BaseActivity;
+import com.zhuandian.oderapp.entity.BillEntity;
 import com.zhuandian.oderapp.entity.FoodEntity;
 import com.zhuandian.oderapp.entity.OrderEntity;
+import com.zhuandian.oderapp.entity.UserEntity;
 import com.zhuandian.oderapp.view.OrderItemView;
 
 import java.util.ArrayList;
@@ -16,6 +18,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 
 public class OrderActivity extends BaseActivity {
 
@@ -29,6 +34,8 @@ public class OrderActivity extends BaseActivity {
     private List<OrderEntity> orderEntityList;
     public static final int REQUEST_OPEN_ORDER_PAGE = 1;
     public static final int REQUEST_CLOSE_ORDER_PAGE = 2;
+    private double totalPrice;
+    private List<String> foodList;
 
 
     @Override
@@ -74,9 +81,11 @@ public class OrderActivity extends BaseActivity {
             }
         }
         llOrderContainer.removeAllViews();
-        double totalPrice = 0;
+         totalPrice = 0;
+         foodList = new ArrayList<>();
         for (OrderEntity orderEntity : orderEntityList) {
             totalPrice += orderEntity.getOrderPrice() * orderEntity.getOrderCount();
+            foodList.add(orderEntity.getOrderName());
             OrderItemView itemView = new OrderItemView(this);
             itemView.setItemData(this, orderEntity);
             llOrderContainer.addView(itemView);
@@ -87,17 +96,31 @@ public class OrderActivity extends BaseActivity {
 
     @OnClick(R.id.tv_to_order_page)
     public void onClick() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("下单成功")
-                .setMessage("下单成功，祝您用餐愉快!!")
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        setResult(REQUEST_CLOSE_ORDER_PAGE);
-                        finish();
-                        dialog.dismiss();
-                    }
-                })
-                .show();
+
+        BillEntity billEntity = new BillEntity();
+        billEntity.setTotalPrice(totalPrice);
+        billEntity.setUserEntity(BmobUser.getCurrentUser(UserEntity.class));
+        billEntity.setFoods(foodList);
+        billEntity.setShopName(shopCarList.get(0).getShopName());
+        billEntity.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                if (e==null){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(OrderActivity.this);
+                    builder.setTitle("下单成功")
+                            .setMessage("下单成功，祝您用餐愉快!!")
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    setResult(REQUEST_CLOSE_ORDER_PAGE);
+                                    finish();
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+                }
+            }
+        });
+
     }
 }
